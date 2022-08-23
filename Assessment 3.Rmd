@@ -1,0 +1,100 @@
+---
+title: Assessment 3
+Output: GitHub Document
+---
+```{r Programs}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(viridis)
+library(kableExtra)
+library(datasets)
+library(plotly)
+library(heatmaply)
+
+```
+# Summary
+
+This is an analysis of the Super Netball season, it will focus on players output in three categories: Defensive, Play making and Offensive. I will also be highlighting players who have stood out in these categories. 
+
+
+```{r Summary Data}
+
+
+Data <- read.csv("Data/Dataset3_Assessment3.csv")
+view(Data)
+
+summary(Data)
+
+tibble(Data)
+```
+
+# Tidying of data
+
+This table shows the data which has been tidyed and condensed to allow for a cleaner look at the certain outputs of players.
+
+
+
+```{r Tidying Data}
+DataWide <- Data %>%
+  pivot_wider(names_from = Statistic, 
+              values_from = Total,
+              values_fill = 0,
+              names_sep = "-")
+
+
+Data_Clean <- DataWide %>%
+  mutate("Defensive Output" = deflectionWithGain+deflectionWithNoGain+intercepts/minutesPlayed) %>%
+  mutate("Playmaking Output" = possessions+goalAssists+feeds+feedWithAttempt/minutesPlayed)%>%
+  mutate("Offensive Output" = goals+goalAttempts/minutesPlayed)
+
+Data_Clean %>%
+  pivot_longer(`Defensive Output`:`Offensive Output`,
+               names_to = "Output",
+               values_to = "Value")
+
+
+Data_Clean %>%
+  filter(Team == "Melbourne Vixens") %>%
+  summarise()
+  kbl(Data_Clean) %>%
+  kable_styling(full_width = F, html_font = "Cambria")
+
+
+```
+
+# Defensive Output
+
+
+
+```{r Def Output}
+Data_Clean %>%
+  ggplot(Data_Clean, mapping = aes(x = Team, y = `Defensive Output`)) +
+  geom_boxplot(colour = "blue",
+               fill = "blue",
+               alpha=0.2,
+               notch = FALSE,
+               notchwidth = 0.8,
+               outlier.colour = "red",
+               outlier.fill = "red",
+               outlier.size = 3)
+```
+
+# Offensive Output
+
+
+```{r Off. Output}
+Data_Clean %>%
+  arrange(Data_Clean == "Offensive Output")
+  ggplot(Data_Clean, mapping = aes(fill = Team, x = Team, y = `Offensive Output`))+
+  geom_bar(position = "dodge", stat = "identity")
+```
+
+
+```{r Pmk Output}
+
+Data_Clean %>%
+  ggplot(Data_Clean, mapping = aes(x = `Playmaking Output`, y = Team))+
+  geom_point()
+
+```
