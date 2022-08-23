@@ -1,6 +1,10 @@
 ---
-title: Assessment 3
-Output: GitHub Document
+title: "Assessment 3 - Programming for Sports Performance"
+author: "Julian Asta"
+date: "2022-08-18"
+output: 
+  html_document:
+    code_folding: hide
 ---
 ```{r Programs}
 library(tidyverse)
@@ -65,7 +69,7 @@ Data_Clean %>%
 
 # Defensive Output
 
-
+This defensive Ouput shows the teams that were successful in creating turnover oppertunities, with GIANTS having the best overall output.
 
 ```{r Def Output}
 Data_Clean %>%
@@ -82,6 +86,7 @@ Data_Clean %>%
 
 # Offensive Output
 
+Offensive Output of teams who were more likely to score due to teh oppertunities given, West Coast Fever were successful in being the most efficent in point scoring through both zones.
 
 ```{r Off. Output}
 Data_Clean %>%
@@ -98,3 +103,10 @@ Data_Clean %>%
   geom_point()
 
 ```
+
+
+# Playmaking Output
+
+This output is closely tied to the offensive output as the teams who were able to score more, were able to do so due to the ability to create efficent passing options to score from.
+
+
